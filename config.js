@@ -14,7 +14,7 @@ const CONFIG = {
     FONNTE_TOKEN: "your-fonnte-api-token",                   // Ganti dengan Token API Fonnte Anda
 
     // 3. Nomor WhatsApp Admin (Gunakan format 62xxx tanpa tanda +)
-    ADMIN_WA_NUMBER: "6281234567890",
+    ADMIN_WA_NUMBER: "628990909555",
 
     // 4. Kredensial Default Panel Admin (Dapat diubah sesuai kebutuhan)
     ADMIN_USERNAME: "admin",
