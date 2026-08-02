@@ -1,0 +1,745 @@
+/* ============================================================
+   UNDIAN SPIN KHALIL STORE - RESPONSIVE GLASSMORPHIC STYLING
+   ============================================================ */
+
+/* Google Fonts Import */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+    --primary: #2563EB;
+    --primary-hover: #1D4ED8;
+    --primary-light: #EFF6FF;
+    --secondary: #0EA5E9;
+    --accent: #F59E0B;
+    --success: #10B981;
+    --danger: #EF4444;
+    --dark: #0F172A;
+    --dark-muted: #475569;
+    --light-bg: #F8FAFC;
+    --card-bg: #FFFFFF;
+    --border-color: #E2E8F0;
+    --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+    --shadow-md: 0 10px 25px -5px rgba(37, 99, 235, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+    --shadow-lg: 0 20px 35px -10px rgba(37, 99, 235, 0.18), 0 10px 15px -7px rgba(0, 0, 0, 0.08);
+    --radius: 16px;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Global Reset & Base Setup */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+html, body {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    background-color: var(--light-bg);
+    color: var(--dark);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-image: 
+        radial-gradient(circle at 10% 20%, rgba(37, 99, 235, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(14, 165, 233, 0.05) 0%, transparent 40%);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Navigation Bar Responsive */
+.navbar {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-color);
+    padding: 0.85rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    width: 100%;
+}
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 800;
+    font-size: 1.15rem;
+    color: var(--primary);
+    letter-spacing: -0.3px;
+}
+
+.nav-brand i {
+    font-size: 1.5rem;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.nav-link {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--dark-muted);
+    transition: var(--transition);
+    padding: 0.45rem 0.85rem;
+    border-radius: 8px;
+    white-space: nowrap;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--primary);
+    background: var(--primary-light);
+}
+
+/* Main Layout Wrapper */
+.main-wrapper {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem 0.75rem;
+    width: 100%;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 0.5rem;
+}
+
+/* Card Components Responsive */
+.card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-md);
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    padding: 2rem 1.5rem;
+    transition: var(--transition);
+    width: 100%;
+}
+
+.card:hover {
+    box-shadow: var(--shadow-lg);
+}
+
+.card-center {
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+    margin: 0 auto;
+}
+
+/* Header & Typography Fixes */
+.brand-logo {
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    margin: 0 auto 1.25rem auto;
+    box-shadow: 0 8px 16px rgba(37, 99, 235, 0.25);
+    animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-6px); }
+}
+
+/* Fix Judul rapi dan tidak terpotong di HP */
+h1.page-title {
+    font-size: clamp(1.35rem, 5.5vw, 1.85rem);
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: var(--dark);
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+    word-break: break-word;
+}
+
+h1.page-title span {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+.subtitle {
+    color: var(--dark-muted);
+    font-size: 0.88rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+}
+
+/* Form Controls & Inputs Responsive */
+.form-group {
+    text-align: left;
+    margin-bottom: 1.25rem;
+    position: relative;
+    width: 100%;
+}
+
+.form-label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.88rem;
+    color: var(--dark);
+    margin-bottom: 0.4rem;
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border-radius: 12px;
+    border: 2px solid var(--border-color);
+    font-size: 0.95rem;
+    color: var(--dark);
+    background-color: #FAFAFA;
+    transition: var(--transition);
+    outline: none;
+    letter-spacing: 0.3px;
+}
+
+.form-input:focus {
+    border-color: var(--primary);
+    background-color: white;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
+}
+
+.form-hint {
+    font-size: 0.78rem;
+    color: var(--dark-muted);
+    margin-top: 0.35rem;
+    display: flex;
+    justify-content: space-between;
+    line-height: 1.4;
+}
+
+.form-error {
+    color: var(--danger);
+    font-size: 0.82rem;
+    margin-top: 0.35rem;
+    display: none;
+    font-weight: 500;
+}
+
+/* Buttons Responsive */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 0.85rem 1.25rem;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: var(--transition);
+    min-height: 46px;
+    touch-action: manipulation;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary), #1D4ED8);
+    color: white;
+    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(37, 99, 235, 0.4);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+.btn-whatsapp {
+    background: linear-gradient(135deg, #25D366, #128C7E);
+    color: white;
+    box-shadow: 0 6px 16px rgba(37, 211, 102, 0.3);
+    font-size: 1rem;
+    padding: 0.95rem;
+}
+
+.btn-whatsapp:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(37, 211, 102, 0.4);
+}
+
+.btn-secondary {
+    background: var(--light-bg);
+    color: var(--dark-muted);
+    border: 1px solid var(--border-color);
+}
+
+.btn-secondary:hover {
+    background: #E2E8F0;
+    color: var(--dark);
+}
+
+.btn-sm {
+    padding: 0.35rem 0.75rem;
+    font-size: 0.82rem;
+    border-radius: 8px;
+    width: auto;
+    min-height: 36px;
+}
+
+.btn-success { background-color: var(--success); color: white; }
+.btn-danger { background-color: var(--danger); color: white; }
+.btn-warning { background-color: var(--accent); color: white; }
+
+/* Badges */
+.badge {
+    display: inline-block;
+    padding: 0.3rem 0.65rem;
+    border-radius: 30px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.badge-pending { background-color: #FEF3C7; color: #D97706; }
+.badge-acc { background-color: #D1FAE5; color: #059669; }
+.badge-rejected { background-color: #FEE2E2; color: #DC2626; }
+.badge-spun { background-color: #DBEAFE; color: #2563EB; }
+
+/* ============================================================
+   RODA SPIN CONTAINER & CANVAS RESPONSIVE UNTUK HP
+   ============================================================ */
+
+.spin-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    width: 100%;
+}
+
+.wheel-outer-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 360px;
+    aspect-ratio: 1 / 1;
+    margin: 0.75rem auto;
+    filter: drop-shadow(0 12px 20px rgba(37, 99, 235, 0.2));
+}
+
+@media (min-width: 480px) {
+    .wheel-outer-wrapper {
+        max-width: 420px;
+    }
+}
+
+/* Pointer Top Needle */
+.wheel-pointer {
+    position: absolute;
+    top: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 36px;
+    height: 44px;
+    z-index: 20;
+    filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.3));
+    pointer-events: none;
+}
+
+.wheel-pointer polygon {
+    fill: #EF4444;
+    stroke: #FFFFFF;
+    stroke-width: 3;
+}
+
+/* Center Cap Pin */
+.wheel-center-cap {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 58px;
+    height: 58px;
+    background: radial-gradient(circle, #FFFFFF 30%, #E2E8F0 100%);
+    border-radius: 50%;
+    z-index: 10;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.25), inset 0 2px 4px rgba(255,255,255,0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary);
+    font-size: 1.3rem;
+    border: 3px solid #FFFFFF;
+}
+
+#spinCanvas {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: white;
+    display: block;
+}
+
+/* Spin Result Modal Card */
+.result-card {
+    display: none;
+    text-align: center;
+    animation: zoomIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes zoomIn {
+    from { opacity: 0; transform: scale(0.85); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.result-icon {
+    font-size: 3.5rem;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+}
+
+.result-prize-box {
+    background: linear-gradient(135deg, #EFF6FF, #DBEAFE);
+    border: 2px dashed var(--primary);
+    padding: 1rem;
+    border-radius: 14px;
+    margin: 1.25rem 0;
+}
+
+.result-prize-title {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--primary);
+    word-break: break-word;
+}
+
+/* ============================================================
+   ADMIN DASHBOARD LAYOUT & MOBILE RESPONSIVE
+   ============================================================ */
+
+.admin-layout {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+}
+
+.sidebar {
+    width: 250px;
+    background: #0F172A;
+    color: white;
+    padding: 1.5rem 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: var(--transition);
+    flex-shrink: 0;
+}
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.15rem;
+    font-weight: 700;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 1.5rem;
+}
+
+.sidebar-menu {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    color: #94A3B8;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: var(--transition);
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.sidebar-link:hover, .sidebar-link.active {
+    background: var(--primary);
+    color: white;
+}
+
+.admin-content {
+    flex: 1;
+    padding: 1.5rem;
+    background-color: var(--light-bg);
+    overflow-y: auto;
+    width: 100%;
+}
+
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+/* Stats Cards Grid */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: white;
+    padding: 1.25rem;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.stat-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+}
+
+.stat-icon.blue { background: #DBEAFE; color: #2563EB; }
+.stat-icon.yellow { background: #FEF3C7; color: #D97706; }
+.stat-icon.green { background: #D1FAE5; color: #059669; }
+.stat-icon.purple { background: #F3E8FF; color: #9333EA; }
+.stat-icon.red { background: #FEE2E2; color: #DC2626; }
+
+.stat-val {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--dark);
+}
+
+.stat-lbl {
+    font-size: 0.8rem;
+    color: var(--dark-muted);
+    font-weight: 500;
+}
+
+/* Tables Responsive */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    background: white;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+    -webkit-overflow-scrolling: touch;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    min-width: 650px;
+}
+
+.table th, .table td {
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.85rem;
+}
+
+.table th {
+    background-color: #F8FAFC;
+    font-weight: 600;
+    color: var(--dark-muted);
+    text-transform: uppercase;
+    font-size: 0.72rem;
+    letter-spacing: 0.5px;
+}
+
+.table tbody tr:hover {
+    background-color: #F1F5F9;
+}
+
+/* Tab Content */
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Settings Grid */
+.settings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+}
+
+.radio-card {
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    cursor: pointer;
+    transition: var(--transition);
+    margin-bottom: 0.75rem;
+}
+
+.radio-card:hover, .radio-card.active {
+    border-color: var(--primary);
+    background-color: var(--primary-light);
+}
+
+.radio-card input {
+    margin-top: 3px;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 1.25rem 1rem;
+    color: var(--dark-muted);
+    font-size: 0.8rem;
+    border-top: 1px solid var(--border-color);
+    margin-top: auto;
+    width: 100%;
+}
+
+/* ============================================================
+   RESPONSIVE MEDIA QUERIES (HP & TABLET)
+   ============================================================ */
+
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 0.75rem 1rem;
+    }
+
+    .nav-brand {
+        font-size: 1.05rem;
+    }
+
+    .nav-links {
+        gap: 0.35rem;
+    }
+
+    .nav-link {
+        font-size: 0.82rem;
+        padding: 0.35rem 0.6rem;
+    }
+
+    .card {
+        padding: 1.5rem 1.15rem;
+        border-radius: 14px;
+    }
+
+    .admin-layout {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        padding: 0.85rem 1rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .sidebar-header {
+        margin-bottom: 0.75rem;
+        padding-bottom: 0.75rem;
+    }
+
+    .sidebar-menu {
+        flex-direction: row;
+        overflow-x: auto;
+        padding-bottom: 0.5rem;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .sidebar-link {
+        padding: 0.5rem 0.85rem;
+        font-size: 0.82rem;
+    }
+
+    .admin-content {
+        padding: 1rem;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+    }
+
+    .stat-card {
+        padding: 1rem 0.85rem;
+    }
+
+    .stat-val {
+        font-size: 1.3rem;
+    }
+
+    .stat-lbl {
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 420px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .navbar {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: stretch;
+        text-align: center;
+    }
+
+    .nav-brand {
+        justify-content: center;
+    }
+
+    .nav-links {
+        justify-content: center;
+    }
+}

@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Admin - Undian Spin Khalil Store</title>
+    <!-- Google Fonts & FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- SweetAlert2 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Supabase SDK CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="admin-layout">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div>
+                <div class="sidebar-header">
+                    <i class="fa-solid fa-dharmachakra" style="color: #2563EB; font-size: 1.5rem;"></i>
+                    <span>KHALIL STORE</span>
+                </div>
+                <ul class="sidebar-menu">
+                    <li class="sidebar-link active" onclick="switchTab('dashboardTab', this)">
+                        <i class="fa-solid fa-chart-pie"></i> Dashboard
+                    </li>
+                    <li class="sidebar-link" onclick="switchTab('invoicesTab', this)">
+                        <i class="fa-solid fa-file-invoice"></i> Data Invoice
+                    </li>
+                    <li class="sidebar-link" onclick="switchTab('prizesTab', this)">
+                        <i class="fa-solid fa-gift"></i> Pengaturan Hadiah
+                    </li>
+                    <li class="sidebar-link" onclick="switchTab('settingsTab', this)">
+                        <i class="fa-solid fa-sliders"></i> Pengaturan Spin
+                    </li>
+                </ul>
+            </div>
+            
+            <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem;">
+                <div class="sidebar-link" onclick="handleAdminLogout()" style="color: #EF4444;">
+                    <i class="fa-solid fa-right-from-bracket"></i> Logout
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Admin Content Area -->
+        <main class="admin-content">
+            
+            <!-- ---------------- SECTION 1: DASHBOARD STATISTIK ---------------- -->
+            <section id="dashboardTab" class="tab-content active">
+                <div class="admin-header">
+                    <div>
+                        <h1 style="font-size: 1.8rem; font-weight: 800;">Dashboard Ringkasan</h1>
+                        <p style="color: var(--dark-muted); font-size: 0.9rem;">Statistik & performa Undian Spin Khalil Store secara real-time</p>
+                    </div>
+                    <button class="btn btn-secondary btn-sm" onclick="loadDashboardData()">
+                        <i class="fa-solid fa-rotate"></i> Refresh Data
+                    </button>
+                </div>
+
+                <!-- Cards Grid Statistik -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div>
+                            <div id="statTotalInvoices" class="stat-val">0</div>
+                            <div class="stat-lbl">Jumlah Invoice</div>
+                        </div>
+                        <div class="stat-icon blue"><i class="fa-solid fa-receipt"></i></div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div>
+                            <div id="statPendingInvoices" class="stat-val">0</div>
+                            <div class="stat-lbl">Belum Diverifikasi</div>
+                        </div>
+                        <div class="stat-icon yellow"><i class="fa-solid fa-clock-rotate-left"></i></div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div>
+                            <div id="statAccInvoices" class="stat-val">0</div>
+                            <div class="stat-lbl">Sudah ACC</div>
+                        </div>
+                        <div class="stat-icon green"><i class="fa-solid fa-circle-check"></i></div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div>
+                            <div id="statSpunInvoices" class="stat-val">0</div>
+                            <div class="stat-lbl">Sudah Spin</div>
+                        </div>
+                        <div class="stat-icon purple"><i class="fa-solid fa-dharmachakra"></i></div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div>
+                            <div id="statTotalPrizes" class="stat-val">0</div>
+                            <div class="stat-lbl">Total Hadiah Keluar</div>
+                        </div>
+                        <div class="stat-icon green"><i class="fa-solid fa-award"></i></div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div>
+                            <div id="statTotalZonk" class="stat-val">0</div>
+                            <div class="stat-lbl">Total Zonk</div>
+                        </div>
+                        <div class="stat-icon red"><i class="fa-solid fa-face-frown"></i></div>
+                    </div>
+                </div>
+
+                <!-- Quick Overview Active Spin Mode Card -->
+                <div class="card" style="margin-bottom: 2rem;">
+                    <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem;"><i class="fa-solid fa-gear"></i> Status Mode Spin Saat Ini</h3>
+                    <p style="color: var(--dark-muted); font-size: 0.9rem; margin-bottom: 1rem;">
+                        Mode aktif: <strong id="currentSpinModeBadge" class="badge badge-acc">NORMAL</strong>
+                    </p>
+                    <button class="btn btn-primary btn-sm" onclick="switchTab('settingsTab', document.querySelectorAll('.sidebar-link')[3])">
+                        <i class="fa-solid fa-sliders"></i> Ubah Pengaturan Mode
+                    </button>
+                </div>
+            </section>
+
+
+            <!-- ---------------- SECTION 2: DATA INVOICE ---------------- -->
+            <section id="invoicesTab" class="tab-content">
+                <div class="admin-header">
+                    <div>
+                        <h1 style="font-size: 1.8rem; font-weight: 800;">Data Invoice Customer</h1>
+                        <p style="color: var(--dark-muted); font-size: 0.9rem;">Verifikasi invoice, buat kode tiket spin, dan atur hadiah manual.</p>
+                    </div>
+                    <button class="btn btn-secondary btn-sm" onclick="loadInvoicesData()">
+                        <i class="fa-solid fa-rotate"></i> Refresh Tabel
+                    </button>
+                </div>
+
+                <!-- Table Controls & Search Filter -->
+                <div class="card" style="padding: 1.5rem; margin-bottom: 1.5rem;">
+                    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                        <input type="text" id="searchInvoiceInput" class="form-input" placeholder="Cari invoice, WA, atau kode tiket..." style="flex: 1; min-width: 240px;" oninput="filterInvoiceTable()">
+                        <select id="filterStatusSelect" class="form-input" style="width: 200px;" onchange="filterInvoiceTable()">
+                            <option value="">Semua Status</option>
+                            <option value="Menunggu Verifikasi">Menunggu Verifikasi</option>
+                            <option value="ACC">ACC</option>
+                            <option value="Tolak">Tolak</option>
+                            <option value="Sudah Spin">Sudah Spin</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Modern Data Table -->
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Invoice</th>
+                                <th>No. WhatsApp</th>
+                                <th>Tanggal</th>
+                                <th>Status</th>
+                                <th>Kode Tiket Spin</th>
+                                <th>Hadiah Manual (Rigged)</th>
+                                <th>Hasil Spin</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="invoicesTableBody">
+                            <tr>
+                                <td colspan="9" style="text-align: center; padding: 2rem;">
+                                    <i class="fa-solid fa-spinner fa-spin"></i> Memuat data...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+
+            <!-- ---------------- SECTION 3: PENGATURAN HADIAH ---------------- -->
+            <section id="prizesTab" class="tab-content">
+                <div class="admin-header">
+                    <div>
+                        <h1 style="font-size: 1.8rem; font-weight: 800;">Pengaturan Hadiah Roda</h1>
+                        <p style="color: var(--dark-muted); font-size: 0.9rem;">Kelola daftar hadiah, persentase kemunculan, dan warna sektor roda.</p>
+                    </div>
+                    <button class="btn btn-primary btn-sm" onclick="openAddPrizeModal()">
+                        <i class="fa-solid fa-plus"></i> Tambah Hadiah Baru
+                    </button>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama Hadiah</th>
+                                <th>Persentase (%)</th>
+                                <th>Warna Sektor</th>
+                                <th>Status Aktif</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="prizesTableBody">
+                            <tr>
+                                <td colspan="6" style="text-align: center; padding: 2rem;">
+                                    <i class="fa-solid fa-spinner fa-spin"></i> Memuat data hadiah...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+
+            <!-- ---------------- SECTION 4: PENGATURAN SPIN (FITUR TERPENTING) ---------------- -->
+            <section id="settingsTab" class="tab-content">
+                <div class="admin-header">
+                    <div>
+                        <h1 style="font-size: 1.8rem; font-weight: 800;">Pengaturan Mode Spin</h1>
+                        <p style="color: var(--dark-muted); font-size: 0.9rem;">Atur sistem algoritma hasil spin tanpa perlu mengubah kode program.</p>
+                    </div>
+                    <button class="btn btn-primary btn-sm" onclick="saveSpinSettings()">
+                        <i class="fa-solid fa-floppy-disk"></i> Simpan Pengaturan
+                    </button>
+                </div>
+
+                <div class="settings-grid">
+                    <!-- Mode Choice Radio Cards -->
+                    <div class="card">
+                        <h3 style="font-size: 1.1rem; margin-bottom: 1.25rem;"><i class="fa-solid fa-sliders"></i> Pilih Mode Utama Spin</h3>
+                        
+                        <label class="radio-card" id="cardModeNormal">
+                            <input type="radio" name="spinModeRadio" value="normal" checked onchange="updateModeUI()">
+                            <div>
+                                <strong style="display: block; font-size: 1rem; color: var(--dark);">Mode Normal</strong>
+                                <span style="font-size: 0.85rem; color: var(--dark-muted);">
+                                    Menggunakan persentase hadiah yang telah diatur di Pengaturan Hadiah (misal Zonk 90%, Hadiah 10%).
+                                </span>
+                            </div>
+                        </label>
+
+                        <label class="radio-card" id="cardModeZonk">
+                            <input type="radio" name="spinModeRadio" value="zonk_terus" onchange="updateModeUI()">
+                            <div>
+                                <strong style="display: block; font-size: 1rem; color: var(--danger);">Mode Zonk Terus</strong>
+                                <span style="font-size: 0.85rem; color: var(--dark-muted);">
+                                    Semua customer yang melakukan spin selalu dipastikan mendapatkan Zonk.
+                                </span>
+                            </div>
+                        </label>
+
+                        <label class="radio-card" id="cardModeKecil">
+                            <input type="radio" name="spinModeRadio" value="hadiah_kecil" onchange="updateModeUI()">
+                            <div>
+                                <strong style="display: block; font-size: 1rem; color: var(--accent);">Mode Hadiah Kecil</strong>
+                                <span style="font-size: 0.85rem; color: var(--dark-muted);">
+                                    Customer hanya bisa mendapatkan Zonk, Voucher Rp5.000, atau Voucher Rp10.000.
+                                </span>
+                            </div>
+                        </label>
+
+                        <label class="radio-card" id="cardModeCustom">
+                            <input type="radio" name="spinModeRadio" value="custom" onchange="updateModeUI()">
+                            <div>
+                                <strong style="display: block; font-size: 1rem; color: var(--primary);">Mode Custom</strong>
+                                <span style="font-size: 0.85rem; color: var(--dark-muted);">
+                                    Admin bebas memilih kombinasi hadiah mana saja yang diizinkan untuk keluar.
+                                </span>
+                            </div>
+                        </label>
+                    </div>
+
+                    <!-- Custom Prizes Checkbox Panel -->
+                    <div class="card" id="customPrizesBox">
+                        <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem;"><i class="fa-solid fa-list-check"></i> Filter Hadiah Mode Custom</h3>
+                        <p style="font-size: 0.85rem; color: var(--dark-muted); margin-bottom: 1.25rem;">
+                            Beri tanda centang pada hadiah yang diizinkan keluar di Mode Custom:
+                        </p>
+
+                        <div id="customCheckboxesList" style="display: flex; flex-direction: column; gap: 0.75rem;">
+                            <!-- Dynamically populated via JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Info Banner Mode Manual (Rigged) -->
+                <div class="card" style="margin-top: 1.5rem; background: #EFF6FF; border-color: #BFDBFE;">
+                    <div style="display: flex; gap: 1rem; align-items: flex-start;">
+                        <i class="fa-solid fa-wand-magic-sparkles" style="font-size: 2rem; color: var(--primary);"></i>
+                        <div>
+                            <strong style="font-size: 1rem; color: #1E40AF;">Informasi Fitur Mode Manual (Rigged Settings)</strong>
+                            <p style="font-size: 0.88rem; color: #1E3A8A; margin-top: 0.4rem; line-height: 1.5;">
+                                Untuk menentukan hasil spin secara spesifik pada customer/invoice tertentu, buka menu <strong>Data Invoice</strong> lalu klik tombol <strong>Setting Hadiah Manual</strong> pada invoice yang diinginkan.
+                                Hasil spin tetap terlihat acak & berputar alami di layar customer, namun roda akan berhenti tepat pada hadiah yang telah Anda tentukan sebelumnya!
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- JS Scripts -->
+    <script src="config.js"></script>
+    <script src="supabase.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>
