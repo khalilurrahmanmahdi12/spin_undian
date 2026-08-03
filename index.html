@@ -5,16 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Undian Spin Khalil Store - Input Invoice</title>
     <meta name="description" content="Website Undian Spin Khalil Store Resmi. Masukkan nomor invoice dan nomor WhatsApp Anda untuk mengikuti undian!">
-    <!-- Google Fonts & Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- SweetAlert2 CDN -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <!-- Supabase JS Client CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+    <!-- ====================================================
+         WINNER TICKER BAR (Di atas Navbar)
+         ==================================================== -->
+    <div class="winner-ticker-bar">
+        <div class="winner-ticker-inner">
+            <div class="winner-ticker-label">
+                <i class="fa-solid fa-fire"></i> PEMENANG HARI INI
+            </div>
+            <div class="winner-ticker-track">
+                <div class="winner-ticker-scroll" id="winnerTickerScroll">
+                    <!-- Diisi oleh ticker.js -->
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Header Navigation -->
     <header class="navbar">
@@ -29,7 +41,6 @@
         </div>
     </header>
 
-    <!-- Main Content Container -->
     <main class="main-wrapper">
         <div class="card card-center">
             <div class="brand-logo">
@@ -39,10 +50,8 @@
             <h1 class="page-title">UNDIAN SPIN<br><span>KHALIL STORE</span></h1>
             <p class="subtitle">Masukkan nomor invoice dan nomor WhatsApp Anda untuk mengikuti undian berhadiah dari Khalil Store!</p>
 
-            <!-- Form Registrasi Invoice & WA Customer -->
             <form id="formInvoice" onsubmit="handleInvoiceSubmit(event)" novalidate>
                 
-                <!-- Input Nomor Invoice -->
                 <div class="form-group">
                     <label for="invoiceInput" class="form-label">
                         <i class="fa-solid fa-barcode"></i> Nomor Invoice
@@ -63,7 +72,6 @@
                     </div>
                 </div>
 
-                <!-- Input Nomor WhatsApp Customer -->
                 <div class="form-group">
                     <label for="whatsappInput" class="form-label">
                         <i class="fa-brands fa-whatsapp" style="color: #25D366;"></i> Nomor WhatsApp
@@ -89,7 +97,6 @@
                 </button>
             </form>
 
-            <!-- Success Card Container (Tampil setelah berhasil kirim) -->
             <div id="successCard" style="display: none; margin-top: 1.5rem;">
                 <div class="result-prize-box" style="text-align: left; background: #F0FDF4; border-color: #10B981;">
                     <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 0.75rem;">
@@ -111,13 +118,12 @@
         </div>
     </main>
 
-    <!-- Footer -->
     <footer class="footer">
         <p>&copy; 2026 Undian Spin Khalil Store. All Rights Reserved.</p>
     </footer>
 
-    <!-- JS Scripts -->
     <script src="config.js"></script>
+    <script src="ticker.js"></script>
     <script src="supabase.js"></script>
     <script src="app.js"></script>
 </body>
