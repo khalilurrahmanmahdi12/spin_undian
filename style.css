@@ -51,72 +51,79 @@ body {
 a { text-decoration: none; color: inherit; }
 
 /* ============================================================
-   WINNERS TICKER MARQUEE BAR (Live Winner Announcements)
+   WINNERS TICKER BAR — REDESIGNED (Trophy Card Style)
    ============================================================ */
 .winner-ticker-bar {
-    background: linear-gradient(135deg, #0F172A 0%, #1E3A8A 50%, #2563EB 100%);
+    background: linear-gradient(90deg, #0F172A 0%, #1E293B 100%);
     color: white;
     padding: 0;
     overflow: hidden;
     position: relative;
     z-index: 99;
-    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 2px solid rgba(245, 158, 11, 0.4);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.3);
 }
 
 .winner-ticker-inner {
     display: flex;
-    align-items: center;
-    height: 42px;
+    align-items: stretch;
+    height: 46px;
 }
 
+/* Label kiri "🏆 PEMENANG" */
 .winner-ticker-label {
-    background: linear-gradient(135deg, #F59E0B, #EF4444);
+    background: linear-gradient(135deg, #D97706, #B45309);
     color: white;
     font-weight: 800;
-    font-size: 0.7rem;
+    font-size: 0.68rem;
     padding: 0 1rem;
-    height: 100%;
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 5px;
     white-space: nowrap;
     flex-shrink: 0;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.8px;
     text-transform: uppercase;
-    z-index: 2;
     position: relative;
+    z-index: 2;
+    border-right: 3px solid rgba(255,255,255,0.15);
 }
 
-.winner-ticker-label::after {
-    content: '';
-    position: absolute;
-    right: -12px;
-    top: 0;
-    height: 100%;
-    width: 14px;
-    background: linear-gradient(135deg, #EF4444, transparent);
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+.winner-ticker-label i {
+    font-size: 0.85rem;
+    animation: trophy-bounce 1.5s ease-in-out infinite;
 }
 
+@keyframes trophy-bounce {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    25% { transform: translateY(-2px) rotate(-5deg); }
+    75% { transform: translateY(-2px) rotate(5deg); }
+}
+
+/* Track scroll area */
 .winner-ticker-track {
     flex: 1;
     overflow: hidden;
     position: relative;
-    height: 100%;
     display: flex;
     align-items: center;
-    padding-left: 16px;
+    /* Fade edge kiri & kanan */
+    mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
 }
 
 .winner-ticker-scroll {
     display: flex;
+    align-items: center;
     gap: 0;
-    animation: tickerScroll 28s linear infinite;
+    animation: tickerScroll 55s linear infinite;
     white-space: nowrap;
+    will-change: transform;
 }
 
 .winner-ticker-scroll:hover {
     animation-play-state: paused;
+    cursor: default;
 }
 
 @keyframes tickerScroll {
@@ -124,57 +131,60 @@ a { text-decoration: none; color: inherit; }
     100% { transform: translateX(-50%); }
 }
 
+/* Item Pemenang — Pill Card Style */
 .winner-item {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    font-size: 0.8rem;
-    font-weight: 500;
-    color: rgba(255, 255, 255, 0.92);
-    padding: 0 1.5rem 0 0;
+    gap: 6px;
+    padding: 0 1.75rem 0 0;
     white-space: nowrap;
 }
 
-.winner-item .winner-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: #10B981;
-    animation: pulse-dot 1.5s ease-in-out infinite;
+.winner-trophy-icon {
+    font-size: 0.85rem;
+    color: #FCD34D;
     flex-shrink: 0;
 }
 
-@keyframes pulse-dot {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(0.8); }
-}
-
 .winner-item .winner-invoice {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(245, 158, 11, 0.15);
+    border: 1px solid rgba(245, 158, 11, 0.35);
     border-radius: 6px;
-    padding: 2px 8px;
-    font-family: monospace;
-    font-size: 0.82rem;
+    padding: 2px 7px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.78rem;
     font-weight: 700;
     color: #FDE68A;
     letter-spacing: 0.5px;
 }
 
+.winner-mid-text {
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.55);
+}
+
 .winner-item .winner-prize {
-    color: #86EFAC;
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    border-radius: 6px;
+    padding: 2px 8px;
+    color: #6EE7B7;
     font-weight: 700;
-    font-size: 0.82rem;
+    font-size: 0.78rem;
 }
 
 .winner-item .winner-time {
-    color: rgba(255, 255, 255, 0.5);
-    font-size: 0.75rem;
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.35);
+    font-style: italic;
 }
 
 .winner-sep {
-    color: rgba(255, 255, 255, 0.25);
-    margin: 0 0.75rem;
-    font-size: 1rem;
+    color: rgba(245, 158, 11, 0.3);
+    margin: 0 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 700;
 }
 
 /* ============================================================
@@ -790,9 +800,19 @@ h1.page-title span {
     .stat-val { font-size: 1.3rem; }
     .stat-lbl { font-size: 0.75rem; }
 
-    .winner-ticker-label { font-size: 0.65rem; padding: 0 0.75rem; }
-    .winner-item { font-size: 0.75rem; }
-    .winner-item .winner-invoice { font-size: 0.78rem; }
+    .winner-ticker-inner { height: 40px; }
+    .winner-ticker-label { 
+        font-size: 0.6rem; 
+        padding: 0 0.6rem;
+        gap: 4px;
+        letter-spacing: 0.4px;
+    }
+    .winner-ticker-label i { font-size: 0.75rem; }
+    .winner-item { gap: 5px; padding: 0 1.25rem 0 0; }
+    .winner-item .winner-invoice { font-size: 0.72rem; padding: 1px 5px; }
+    .winner-item .winner-prize { font-size: 0.72rem; padding: 1px 6px; }
+    .winner-item .winner-time { font-size: 0.65rem; }
+    .winner-mid-text { font-size: 0.7rem; }
 }
 
 @media (max-width: 420px) {
