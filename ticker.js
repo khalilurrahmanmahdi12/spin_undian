@@ -97,18 +97,18 @@ function renderWinnerTicker() {
 
     const winners = generateDailyWinners();
 
-    // Duplikasi 2x agar scrolling terlihat seamless tanpa jeda
+    // Duplikasi 2x agar scrolling seamless tanpa jeda
     const allWinners = [...winners, ...winners];
 
-    const html = allWinners.map((w, idx) => `
+    const html = allWinners.map((w) => `
         <span class="winner-item">
-            <span class="winner-dot"></span>
+            <span class="winner-trophy-icon">🏆</span>
             <span class="winner-invoice">${w.invoice}</span>
-            mendapat
+            <span class="winner-mid-text">mendapatkan</span>
             <span class="winner-prize">${w.prize}</span>
             <span class="winner-time">${w.time}</span>
         </span>
-        <span class="winner-sep">•</span>
+        <span class="winner-sep">❯</span>
     `).join('');
 
     container.innerHTML = html;
@@ -116,3 +116,4 @@ function renderWinnerTicker() {
 
 // Jalankan saat DOM siap
 document.addEventListener('DOMContentLoaded', renderWinnerTicker);
+
