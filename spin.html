@@ -1,174 +1,179 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Undian Segera Dibuka</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Undian Segera Dibuka</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <style>
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-            font-family:'Poppins',sans-serif;
-        }
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-        body{
-            min-height:100vh;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            background:linear-gradient(135deg,#0f172a,#1e3a8a,#2563eb);
-            overflow:hidden;
-            color:#fff;
-        }
+body{
+    font-family:Poppins,sans-serif;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:
+    radial-gradient(circle at top,#2563eb 0%,#0f172a 45%,#020617 100%);
+    color:#fff;
+    padding:20px;
+}
 
-        body::before{
-            content:"";
-            position:absolute;
-            width:600px;
-            height:600px;
-            background:rgba(255,255,255,.05);
-            border-radius:50%;
-            top:-250px;
-            right:-200px;
-            filter:blur(10px);
-        }
+.card{
+    width:100%;
+    max-width:430px;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.12);
+    backdrop-filter:blur(20px);
+    border-radius:28px;
+    padding:35px 25px;
+    text-align:center;
+    box-shadow:0 20px 60px rgba(0,0,0,.35);
+}
 
-        body::after{
-            content:"";
-            position:absolute;
-            width:450px;
-            height:450px;
-            background:rgba(255,255,255,.05);
-            border-radius:50%;
-            bottom:-180px;
-            left:-150px;
-            filter:blur(10px);
-        }
+.icon{
+    width:95px;
+    height:95px;
+    margin:auto;
+    border-radius:50%;
+    background:linear-gradient(135deg,#FFD700,#FFB800);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:45px;
+    animation:updown 2s infinite;
+}
 
-        .card{
-            position:relative;
-            z-index:2;
-            width:90%;
-            max-width:650px;
-            padding:45px;
-            border-radius:25px;
-            background:rgba(255,255,255,.12);
-            backdrop-filter:blur(15px);
-            box-shadow:0 25px 60px rgba(0,0,0,.35);
-            text-align:center;
-            animation:fadeUp .8s ease;
-        }
+@keyframes updown{
+    50%{
+        transform:translateY(-8px);
+    }
+}
 
-        @keyframes fadeUp{
-            from{
-                opacity:0;
-                transform:translateY(40px);
-            }
-            to{
-                opacity:1;
-                transform:translateY(0);
-            }
-        }
+.badge{
+    margin:25px auto 18px;
+    display:inline-block;
+    padding:8px 18px;
+    background:#22c55e;
+    border-radius:999px;
+    font-size:14px;
+    font-weight:600;
+}
 
-        .icon{
-            font-size:70px;
-            animation:float 2s ease-in-out infinite;
-        }
+h1{
+    font-size:34px;
+    line-height:1.15;
+    margin-bottom:18px;
+}
 
-        @keyframes float{
-            0%,100%{
-                transform:translateY(0);
-            }
-            50%{
-                transform:translateY(-10px);
-            }
-        }
+p{
+    color:#dbeafe;
+    font-size:16px;
+    line-height:1.8;
+}
 
-        h1{
-            margin-top:20px;
-            font-size:38px;
-            font-weight:700;
-        }
+.date{
+    margin:30px 0;
+    background:#ffffff;
+    color:#111827;
+    padding:18px;
+    border-radius:18px;
+}
 
-        .subtitle{
-            margin-top:15px;
-            font-size:18px;
-            line-height:1.8;
-            color:#e2e8f0;
-        }
+.date span{
+    display:block;
+    color:#2563eb;
+    font-size:14px;
+    font-weight:600;
+    margin-bottom:5px;
+}
 
-        .date{
-            margin:35px auto;
-            display:inline-block;
-            background:#facc15;
-            color:#111827;
-            padding:16px 35px;
-            border-radius:50px;
-            font-size:24px;
-            font-weight:700;
-            box-shadow:0 10px 25px rgba(250,204,21,.35);
-        }
+.date h2{
+    font-size:32px;
+    font-weight:800;
+}
 
-        .message{
-            font-size:17px;
-            line-height:1.8;
-            color:#f8fafc;
-        }
+button{
+    width:100%;
+    margin-top:30px;
+    padding:17px;
+    border:none;
+    border-radius:16px;
+    font-size:17px;
+    font-weight:700;
+    background:#475569;
+    color:#fff;
+    cursor:not-allowed;
+}
 
-        .footer{
-            margin-top:35px;
-            color:#cbd5e1;
-            font-size:15px;
-        }
+.footer{
+    margin-top:22px;
+    color:#94a3b8;
+    font-size:14px;
+}
 
-        @media(max-width:600px){
-            .card{
-                padding:35px 25px;
-            }
+@media(max-width:430px){
 
-            h1{
-                font-size:30px;
-            }
+    .card{
+        padding:30px 20px;
+        border-radius:22px;
+    }
 
-            .date{
-                font-size:20px;
-                padding:14px 25px;
-            }
-        }
-    </style>
+    h1{
+        font-size:28px;
+    }
+
+    p{
+        font-size:15px;
+    }
+
+    .date h2{
+        font-size:28px;
+    }
+
+}
+</style>
 </head>
+
 <body>
 
 <div class="card">
 
     <div class="icon">🎁</div>
 
-    <h1>Undian Segera Dibuka</h1>
+    <div class="badge">
+        EVENT GIVEAWAY
+    </div>
 
-    <p class="subtitle">
+    <h1>Undian Belum Dibuka</h1>
+
+    <p>
         Terima kasih atas antusiasme Anda.
-        <br>
-        Pendaftaran undian saat ini <strong>belum dibuka</strong>.
+        Saat ini pendaftaran undian masih ditutup dan akan dibuka secara resmi pada tanggal berikut.
     </p>
 
     <div class="date">
-        📅 Dibuka 7 Agustus 2026
+        <span>PEMBUKAAN RESMI</span>
+        <h2>7 AGUSTUS</h2>
     </div>
 
-    <p class="message">
-        Bersiaplah untuk mengikuti undian dan raih kesempatan
-        memenangkan <strong>berbagai hadiah menarik</strong>.
-        <br><br>
-        Siapkan invoice Anda dan jadilah salah satu peserta saat
-        pendaftaran resmi dibuka.
+    <p>
+        Siapkan invoice Anda dan jadilah salah satu peserta yang berkesempatan memenangkan berbagai hadiah menarik.
     </p>
 
+    <button disabled>
+        MENUNGGU PEMBUKAAN
+    </button>
+
     <div class="footer">
-        ✨ Sampai jumpa di hari pembukaan. Semoga beruntung!
+        Sampai jumpa di hari pembukaan ✨
     </div>
 
 </div>
