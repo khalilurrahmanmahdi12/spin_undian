@@ -74,8 +74,12 @@ function formatToIndonesianPhone(phone) {
 /**
  * Handle Submit Form Invoice & WA
  */
+/**
+ * Handle Submit Form Invoice & WA
+ */
 async function handleInvoiceSubmit(event) {
     event.preventDefault();
+
     const invoiceInput = document.getElementById('invoiceInput');
     const whatsappInput = document.getElementById('whatsappInput');
     const btnSubmit = document.getElementById('btnSubmit');
@@ -83,7 +87,7 @@ async function handleInvoiceSubmit(event) {
     const invoiceVal = invoiceInput.value.trim().toUpperCase();
     const rawWaVal = whatsappInput.value.trim();
 
-    // 1. Validasi Input Format
+    // 1. Validasi Input
     const isInvValid = validateInvoiceFormat(invoiceVal);
     const isWaValid = validateWhatsappFormat(rawWaVal);
 
@@ -92,7 +96,7 @@ async function handleInvoiceSubmit(event) {
             icon: 'error',
             title: 'Input Tidak Valid',
             text: 'Pastikan format Invoice (INV + 12 digit + INV) dan Nomor WhatsApp (min 10 digit) sudah benar.',
-            confirmColor: '#2563eb'
+            confirmButtonColor: '#2563eb'
         });
         return;
     }
@@ -100,53 +104,121 @@ async function handleInvoiceSubmit(event) {
     const normalizedWa = formatToIndonesianPhone(rawWaVal);
 
     try {
-        // Matikan tombol submit & tampilkan indikator loading
-        btnSubmit.disabled = true;
-        btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Memproses...';
 
-        // 2. Cek apakah invoice sudah pernah terdaftar di Supabase Database
+        btnSubmit.disabled = true;
+        btnSubmit.innerHTML = 'Memproses...';
+
+        // Cek invoice sudah ada atau belum
         const existingInvoice = await DB.getInvoiceByNumber(invoiceVal);
 
         if (existingInvoice) {
+
             Swal.fire({
                 icon: 'warning',
                 title: 'Invoice Sudah Terdaftar',
-                text: `Nomor Invoice ${invoiceVal} sudah pernah dikirim sebelumnya. Status saat ini: ${existingInvoice.status}`,
-                confirmColor: '#2563eb'
+                html: `
+                    <p>Invoice <b>${invoiceVal}</b> sudah pernah digunakan.</p>
+
+                    <br>
+
+                    <div style="
+                        background:#f8fafc;
+                        padding:15px;
+                        border-radius:10px;
+                    ">
+                        <b>Kode Tiket Spin</b>
+
+                        <h2 style="
+                            margin-top:10px;
+                            color:#2563eb;
+                            letter-spacing:3px;
+                        ">
+                            ${existingInvoice.ticket_code}
+                        </h2>
+
+                        <small>Status : ${existingInvoice.status}</small>
+                    </div>
+                `,
+                confirmButtonColor: '#2563eb'
             });
+
             btnSubmit.disabled = false;
             btnSubmit.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Kirim Invoice';
             return;
         }
 
-        // 3. Simpan ke Supabase Database dengan Status "Menunggu Verifikasi" & No WA Customer
-        await DB.createInvoice(invoiceVal, normalizedWa);
-        await DB.addLog(invoiceVal, `Invoice baru dikirim oleh customer (WA: ${normalizedWa})`);
+        // Simpan invoice
+        const invoice = await DB.createInvoice(invoiceVal, normalizedWa);
 
-        // 4. Kirim WhatsApp Notifikasi ke Admin via Fonnte API
+        await DB.addLog(
+            invoiceVal,
+            `Invoice baru dikirim oleh customer (WA: ${normalizedWa})`
+        );
+
+        // Kirim WA Admin
         sendWhatsAppAdminNotification(invoiceVal, normalizedWa);
 
-        // 5. Tampilkan Notifikasi & Halaman Sukses
+        // Popup sukses + tampilkan kode tiket
         Swal.fire({
             icon: 'success',
-            title: 'Invoice Berhasil Dikirim!',
-            text: 'Silakan tunggu Admin melakukan verifikasi dan mengirimkan Kode Tiket ke WhatsApp Anda.',
-            confirmColor: '#2563eb'
+            title: 'Invoice Berhasil!',
+            html: `
+                <p>Invoice berhasil dikirim.</p>
+
+                <br>
+
+                <div style="
+                    background:#f8fafc;
+                    padding:20px;
+                    border-radius:12px;
+                    border:1px solid #e5e7eb;
+                ">
+
+                    <div style="font-size:15px;margin-bottom:10px;">
+                        Kode Tiket Spin
+                    </div>
+
+                    <div style="
+                        font-size:32px;
+                        font-weight:bold;
+                        color:#2563eb;
+                        letter-spacing:4px;
+                    ">
+                        ${invoice.ticket_code}
+                    </div>
+
+                    <div style="
+                        margin-top:10px;
+                        font-size:13px;
+                        color:#666;
+                    ">
+                        Simpan kode ini untuk digunakan saat Spin.
+                    </div>
+
+                </div>
+            `,
+            confirmButtonColor: '#2563eb'
         });
 
-        // Sembunyikan form dan tampilkan kartu sukses
         document.getElementById('formInvoice').style.display = 'none';
         document.getElementById('successCard').style.display = 'block';
 
     } catch (error) {
-        console.error("Error pada submit invoice:", error);
+
+        console.error(error);
+
         Swal.fire({
             icon: 'error',
             title: 'Gagal Mengirim',
-            text: 'Terjadi kesalahan pada sistem atau database. Silakan coba beberapa saat lagi.',
-            confirmColor: '#2563eb'
+            text: 'Terjadi kesalahan pada sistem atau database.',
+            confirmButtonColor: '#2563eb'
         });
+
+    } finally {
+
         btnSubmit.disabled = false;
         btnSubmit.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Kirim Invoice';
+
     }
 }
+
