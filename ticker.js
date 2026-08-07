@@ -11,13 +11,18 @@
 // ============================================================
 const TICKER_PRIZES = [
     "💎 5 Diamond ML",
-    "💎 12 Diamond ML",
+    "💎 14 Diamond ML",
     "💎 28 Diamond ML",
-    "💎 56 Diamond ML",
-    "💰 Saldo Rp10.000",
-    "💰 Saldo Rp20.000",
-    "💎 Weekly Diamond",
+    "💎 44 Diamond ML",
+    "💎 59 Diamond ML",
+    "💎 86 Diamond ML",
+    "💎 112 Diamond ML",
     "💎 172 Diamond ML",
+    "💎 278 Diamond ML",
+    "💎 Weekly Diamond",
+    "💎 Weekly Diamond 2X",
+    "💎 Weekly Diamond 3X",
+    "💎 355 Diamond ML",
 ];
 
 // ============================================================
