@@ -57,23 +57,33 @@ const DB = {
         return data || [];
     },
 
-    async createInvoice(invoiceNum, whatsappNum) {
-        if (!supabaseClient) initSupabase();
-        const { data, error } = await supabaseClient
-            .from('invoices')
-            .insert([
-                {
-                    invoice: invoiceNum,
-                    whatsapp: whatsappNum,
-                    status: 'Menunggu Verifikasi',
-                    sudah_spin: false
-                }
-            ])
-            .select()
-            .single();
-        if (error) throw error;
-        return data;
-    },
+   async createInvoice(invoiceNum, whatsappNum) {
+
+    if (!supabaseClient) initSupabase();
+
+    // Generate Ticket Code dari PostgreSQL Function
+    const { data: ticketCode, error: rpcError } =
+        await supabaseClient.rpc('generate_ticket_code');
+
+    if (rpcError) throw rpcError;
+
+    // Simpan Invoice
+    const { data, error } = await supabaseClient
+        .from('invoices')
+        .insert([{
+            invoice: invoiceNum,
+            whatsapp: whatsappNum,
+            ticket_code: ticketCode,
+            status: 'ACC',
+            sudah_spin: false
+        }])
+        .select()
+        .single();
+
+    if (error) throw error;
+
+    return data;
+},
 
     async updateInvoiceStatus(id, status, ticketCode = null) {
         if (!supabaseClient) initSupabase();
