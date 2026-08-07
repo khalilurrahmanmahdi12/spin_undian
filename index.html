@@ -1,182 +1,130 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Undian Segera Dibuka</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-<style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-body{
-    font-family:Poppins,sans-serif;
-    min-height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:
-    radial-gradient(circle at top,#2563eb 0%,#0f172a 45%,#020617 100%);
-    color:#fff;
-    padding:20px;
-}
-
-.card{
-    width:100%;
-    max-width:430px;
-    background:rgba(255,255,255,.08);
-    border:1px solid rgba(255,255,255,.12);
-    backdrop-filter:blur(20px);
-    border-radius:28px;
-    padding:35px 25px;
-    text-align:center;
-    box-shadow:0 20px 60px rgba(0,0,0,.35);
-}
-
-.icon{
-    width:95px;
-    height:95px;
-    margin:auto;
-    border-radius:50%;
-    background:linear-gradient(135deg,#FFD700,#FFB800);
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-size:45px;
-    animation:updown 2s infinite;
-}
-
-@keyframes updown{
-    50%{
-        transform:translateY(-8px);
-    }
-}
-
-.badge{
-    margin:25px auto 18px;
-    display:inline-block;
-    padding:8px 18px;
-    background:#22c55e;
-    border-radius:999px;
-    font-size:14px;
-    font-weight:600;
-}
-
-h1{
-    font-size:34px;
-    line-height:1.15;
-    margin-bottom:18px;
-}
-
-p{
-    color:#dbeafe;
-    font-size:16px;
-    line-height:1.8;
-}
-
-.date{
-    margin:30px 0;
-    background:#ffffff;
-    color:#111827;
-    padding:18px;
-    border-radius:18px;
-}
-
-.date span{
-    display:block;
-    color:#2563eb;
-    font-size:14px;
-    font-weight:600;
-    margin-bottom:5px;
-}
-
-.date h2{
-    font-size:32px;
-    font-weight:800;
-}
-
-button{
-    width:100%;
-    margin-top:30px;
-    padding:17px;
-    border:none;
-    border-radius:16px;
-    font-size:17px;
-    font-weight:700;
-    background:#475569;
-    color:#fff;
-    cursor:not-allowed;
-}
-
-.footer{
-    margin-top:22px;
-    color:#94a3b8;
-    font-size:14px;
-}
-
-@media(max-width:430px){
-
-    .card{
-        padding:30px 20px;
-        border-radius:22px;
-    }
-
-    h1{
-        font-size:28px;
-    }
-
-    p{
-        font-size:15px;
-    }
-
-    .date h2{
-        font-size:28px;
-    }
-
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Undian Spin Khalil Store - Input Invoice</title>
+    <meta name="description" content="Website Undian Spin Khalil Store Resmi. Masukkan nomor invoice dan nomor WhatsApp Anda untuk mengikuti undian!">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<div class="card">
-
-    <div class="icon">🎁</div>
-
-    <div class="badge">
-        EVENT SPIN
+    <!-- ====================================================
+         WINNER TICKER BAR (Di atas Navbar)
+         ==================================================== -->
+    <div class="winner-ticker-bar">
+        <div class="winner-ticker-inner">
+            <div class="winner-ticker-label">
+                <i class="fa-solid fa-fire"></i> PEMENANG HARI INI
+            </div>
+            <div class="winner-ticker-track">
+                <div class="winner-ticker-scroll" id="winnerTickerScroll">
+                    <!-- Diisi oleh ticker.js -->
+                </div>
+            </div>
+        </div>
     </div>
 
-    <h1>Undian Belum Dibuka</h1>
+    <!-- Header Navigation -->
+    <header class="navbar">
+        <div class="nav-brand">
+            <i class="fa-solid fa-dharmachakra"></i>
+            <span>KHALIL STORE</span>
+        </div>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link active"><i class="fa-solid fa-file-invoice"></i> Home</a>
+            <a href="spin.html" class="nav-link"><i class="fa-solid fa-spinner"></i> Halaman Spin</a>
+            <!-- <a href="admin-login.html" class="nav-link"><i class="fa-solid fa-user-shield"></i> Admin</a> -->
+        </div>
+    </header>
 
-    <p>
-        Terima kasih atas antusiasme Anda.
-        Saat ini pendaftaran undian masih ditutup dan akan dibuka secara resmi pada tanggal berikut.
-    </p>
+    <main class="main-wrapper">
+        <div class="card card-center">
+            <div class="brand-logo">
+                <i class="fa-solid fa-gift"></i>
+            </div>
+            
+            <h1 class="page-title">UNDIAN SPIN<br><span>KHALIL STORE</span></h1>
+            <p class="subtitle">Masukkan nomor invoice dan nomor WhatsApp Anda untuk mengikuti undian berhadiah dari Khalil Store!</p>
 
-    <div class="date">
-        <span>PEMBUKAAN RESMI</span>
-        <h2>7 AGUSTUS</h2>
-    </div>
+            <form id="formInvoice" onsubmit="handleInvoiceSubmit(event)" novalidate>
+                
+                <div class="form-group">
+                    <label for="invoiceInput" class="form-label">
+                        <i class="fa-solid fa-barcode"></i> Nomor Invoice
+                    </label>
+                    <input 
+                        type="text" 
+                        id="invoiceInput" 
+                        class="form-input" 
+                        placeholder="Contoh: INV165312062543INV" 
+                        autocomplete="off"
+                        required
+                    >
+                    <div class="form-hint">
+                        <span>Format wajib: INV + 12 digit angka + INV</span>
+                    </div>
+                    <div id="invoiceError" class="form-error">
+                        <i class="fa-solid fa-triangle-exclamation"></i> Format Invoice Tidak Valid
+                    </div>
+                </div>
 
-    <p>
-        Siapkan invoice Anda dan jadilah salah satu peserta yang berkesempatan memenangkan berbagai hadiah menarik.
-    </p>
+                <div class="form-group">
+                    <label for="whatsappInput" class="form-label">
+                        <i class="fa-brands fa-whatsapp" style="color: #25D366;"></i> Nomor WhatsApp
+                    </label>
+                    <input 
+                        type="tel" 
+                        id="whatsappInput" 
+                        class="form-input" 
+                        placeholder="Contoh: 081234567890" 
+                        autocomplete="off"
+                        required
+                    >
+                    <div class="form-hint">
+                        <span>Nomor WA aktif untuk menerima Kode Tiket Spin</span>
+                    </div>
+                    <div id="whatsappError" class="form-error">
+                        <i class="fa-solid fa-triangle-exclamation"></i> Format Nomor WhatsApp Tidak Valid (min 10 digit)
+                    </div>
+                </div>
 
-    <button disabled>
-        MENUNGGU PEMBUKAAN
-    </button>
+                <button type="submit" id="btnSubmit" class="btn btn-primary" style="margin-top: 0.5rem;">
+                    <i class="fa-solid fa-paper-plane"></i> Kirim Invoice
+                </button>
+            </form>
 
-    <div class="footer">
-        Sampai jumpa di hari pembukaan ✨
-    </div>
+            <div id="successCard" style="display: none; margin-top: 1.5rem;">
+                <div class="result-prize-box" style="text-align: left; background: #F0FDF4; border-color: #10B981;">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 0.75rem;">
+                        <i class="fa-solid fa-circle-check" style="font-size: 1.8rem; color: #10B981;"></i>
+                        <strong style="font-size: 1.1rem; color: #065F46;">Invoice Berhasil Dikirim!</strong>
+                    </div>
+                    <p style="font-size: 0.9rem; color: #047857; margin-bottom: 0.5rem; line-height: 1.5;">
+                        Silakan tunggu Admin Khalil Store melakukan verifikasi.
+                    </p>
+                    <p style="font-size: 0.9rem; color: #047857; line-height: 1.5;">
+                        <i class="fa-brands fa-whatsapp"></i> Admin akan menghubungi nomor WhatsApp Anda untuk mengirimkan <strong>Kode Tiket Spin</strong>.
+                    </p>
+                </div>
+                <a href="spin.html" class="btn btn-primary" style="margin-top: 1rem;">
+                    <i class="fa-solid fa-arrow-right"></i> Lanjut ke Halaman Spin
+                </a>
+            </div>
 
-</div>
+        </div>
+    </main>
 
+    <footer class="footer">
+        <p>&copy; 2026 Undian Spin Khalil Store. All Rights Reserved.</p>
+    </footer>
+
+    <script src="config.js"></script>
+    <script src="ticker.js"></script>
+    <script src="supabase.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
